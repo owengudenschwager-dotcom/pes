@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salón de Trofeos - Jugadores</title>
+    <style>
+        /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Degradado estilo oro / dorado oscuro premium */
+            background: radial-gradient(circle at center, #2c230b 0%, #181305 60%, #0a0802 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            color: #f39c12;
+            background: linear-gradient(135deg, #ffe066 0%, #d4af37 50%, #aa7c11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+
+        /* Contenedor de tarjetas */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* Tarjeta de jugador */
+        .card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: #f1c40f;
+            box-shadow: 0 15px 30px rgba(241, 196, 15, 0.25);
+        }
+
+        /* Insignia de posición (1ro, 2do, 3ro) */
+        .rank-badge {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: linear-gradient(135deg, #ffe066, #d4af37);
+            color: #121212;
+            font-weight: 800;
+            font-size: 0.85em;
+            padding: 6px 14px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            border: 1px solid #fff3a8;
+        }
+
+        /* Nombre del jugador */
+        .player-name {
+            font-size: 1.8em;
+            color: #ffffff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(241, 196, 15, 0.4);
+            width: 100%;
+            font-weight: 700;
+        }
+
+        /* Secciones de Ligas y Copas */
+        .section-title {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #d4af37;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .trophy-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            min-height: 60px;
+            align-items: center;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Elemento con tooltip */
+        .trophy-item {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .trophy-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .trophy-item:hover img {
+            transform: scale(1.2);
+            filter: drop-shadow(0 6px 12px rgba(241, 196, 15, 0.8));
+        }
+
+        /* Tooltip (Hover) */
+        .trophy-item::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 115%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #111;
+            color: #f1c40f;
+            border: 1px solid #f1c40f;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .trophy-item:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sin-trofeo {
+            color: #7a7a8c;
+            font-size: 0.85em;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Salón de Trofeos-PES</h1>
+
+    <div class="container">
+        
+        <div class="card">
+            <div class="rank-badge">1ro</div>
+            <div class="player-name">Owen</div>
+            
+            <div class="section-title">Ligas</div>
+            <div class="trophy-group">
+                <div class="trophy-item" data-tooltip="Liga PES-1">
+                    <img src="https://cdn-icons-png.flaticon.com/512/179/179249.png" alt="Liga 1">
+                </div>
+            </div>
+
+            <div class="section-title">Copas</div>
+            <div class="trophy-group">
+                <div class="trophy-item" data-tooltip="Copa Palito-1">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3112/3112946.png" alt="Copa 1">
+                </div>
+                <div class="trophy-item" data-tooltip="Copa Palito-2">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3112/3112946.png" alt="Copa 2">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="rank-badge">2do</div>
+            <div class="player-name">Benja Brito</div>
+            
+            <div class="section-title">Ligas</div>
+            <div class="trophy-group">
+                <div class="trophy-item" data-tooltip="Liga PES-2">
+                    <img src="https://cdn-icons-png.flaticon.com/512/179/179249.png" alt="Liga 2">
+                </div>
+            </div>
+
+            <div class="section-title">Copas</div>
+            <div class="trophy-group">
+                <span class="sin-trofeo">Sin copas aún</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="rank-badge">3ro</div>
+            <div class="player-name">Ivan</div>
+            
+            <div class="section-title">Ligas</div>
+            <div class="trophy-group">
+                <div class="trophy-item" data-tooltip="Liga PES-0">
+                    <img src="https://cdn-icons-png.flaticon.com/512/179/179249.png" alt="Liga 0">
+                </div>
+            </div>
+
+            <div class="section-title">Copas</div>
+            <div class="trophy-group">
+                <span class="sin-trofeo">Sin copas aún</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
